@@ -4,20 +4,6 @@
 
 ---
 
-## Table of Contents
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Quick Start (Docker)](#quick-start-docker)
-- [Local Development](#local-development)
-- [API Endpoints](#api-endpoints)
-- [Versioning Strategy](#versioning-strategy)
-- [Pull Request Checklist](#pull-request-checklist)
-- [Deployment](#deployment)
-
----
-
 ## Overview
 
 This service is designed to detect fraudulent transactions by evaluating them against a set of configurable business rules. Flagged transactions are stored separately for easy analyst review and case management.
