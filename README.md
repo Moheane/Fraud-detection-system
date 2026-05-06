@@ -73,9 +73,7 @@ the application runs at port 8080
 ## API Endpoints
 
 ```markdown
-## API Endpoints
-
-### Authentication
+Authentication
 
 | Method | Endpoint                    | Description                    | Request Body     |
 |--------|-----------------------------|--------------------------------|------------------|
