@@ -33,5 +33,9 @@ public class FlaggedTransaction {
     private String reason;
     @Enumerated(EnumType.STRING)
     private Status transactionStatus;
+    @Enumerated(EnumType.STRING)
+    private Risk risk;
+    private int RiskScore;
+
 
 }

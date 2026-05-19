@@ -1,17 +1,22 @@
 package com.frauddetectionapp.services.transaction;
 
+import com.frauddetectionapp.Entities.flaggedtransaction.FlaggedTransaction;
 import com.frauddetectionapp.Entities.transaction.Transaction;
 import com.frauddetectionapp.dto.transaction.TransactionRequest;
 import com.frauddetectionapp.dto.transaction.TransactionResponse;
 import com.frauddetectionapp.dto.transaction.TransactionsMapper;
 import com.frauddetectionapp.repositories.transaction.TransactionRepository;
+import com.frauddetectionapp.services.exceptions.BusinessException;
 import com.frauddetectionapp.services.flaggedtransaction.FlaggedTransactionService;
 import com.frauddetectionapp.services.flaggedtransaction.FraudEngine;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +28,16 @@ public class TransactionService {
     private final FlaggedTransactionService flaggedTransactionService;
     private final FraudEngine fraudEngine;
 
+
     public TransactionResponse createTransaction(TransactionRequest  transactionRequest){
+
+        if (transactionRequest.getAmount() == null || transactionRequest.getAmount().compareTo(String.valueOf(BigDecimal.ZERO)) <= 0) {
+            throw new BusinessException("Transaction amount must be greater than zero",
+                    HttpStatus.BAD_REQUEST);
+        }
+        if (transactionRequest.getReference().isEmpty()) {
+            throw new BusinessException("reference cannot be empty");
+        }
 
         Transaction saved = transactionRepository.save(mapper.toEntity(transactionRequest));
 
@@ -34,6 +48,12 @@ public class TransactionService {
 
 
         return mapper.toResponseDTO(saved);
+    }
+
+    public Optional<TransactionResponse> getTransactionById(Long Id) {
+        log.info("getting transaction By Id transactions");
+        return transactionRepository.findById(Id)
+                .map(mapper::toResponseDTO);
     }
 
     public List<TransactionResponse> getAllTransactions() {
@@ -61,6 +81,8 @@ public class TransactionService {
                 .map(mapper::toResponseDTO)
                 .toList();
     }
+
+
 
     public List<TransactionResponse> getTransactionsByPaymentCategory(String paymentCategory) {
 

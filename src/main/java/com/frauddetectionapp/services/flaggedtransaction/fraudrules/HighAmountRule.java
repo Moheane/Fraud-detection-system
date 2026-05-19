@@ -21,7 +21,7 @@ public class HighAmountRule implements FraudRuleInterface {
 
         if (amount > THRESHOLD) {
             return Optional.of(new FraudRuleHitResults(
-                    "HIGH_AMOUNT",
+                    FraudRule.HIGH_AMOUNT,
                     "Amount " + amount + " exceeds threshold of " + THRESHOLD
             ));
         }

@@ -1,6 +1,7 @@
 package com.frauddetectionapp.repositories.flaggedtransaction;
 
 import com.frauddetectionapp.Entities.flaggedtransaction.FlaggedTransaction;
+import com.frauddetectionapp.Entities.flaggedtransaction.FraudRule;
 import com.frauddetectionapp.Entities.transaction.*;
 import com.frauddetectionapp.repositories.transaction.TransactionRepositoryCustom;
 
@@ -35,8 +36,19 @@ class FlaggedTransactionRepositoryImpl implements FlaggedTransactionRepositoryCu
     }
 
     @Override
+    public List<FlaggedTransaction> findFlaggedTransactionFraudRule(String fraudRuleRequest) {
+        FraudRule fraudRule = FraudRule.valueOf(fraudRuleRequest.toUpperCase());
+
+        return em.createQuery(
+                        queryScripts.findByFraudRule(), FlaggedTransaction.class)
+                .setParameter("triggeredRules", "%" + fraudRule + "%")
+                .getResultList()
+                .stream().toList();
+    }
+
+    @Override
     public List<FlaggedTransaction> findFlaggedTransactionChannel(String channel) {
-        Channel channelCategory = Channel.valueOf(channel.toUpperCase()); // convert String → enum
+        Channel channelCategory = Channel.valueOf(channel.toUpperCase());
 
         return em.createQuery(
                         queryScripts.findByChannel(), FlaggedTransaction.class)
@@ -47,18 +59,18 @@ class FlaggedTransactionRepositoryImpl implements FlaggedTransactionRepositoryCu
 
     @Override
     public List<FlaggedTransaction> findFlaggedTransactionStatus(String status) {
-        Status statusCategory = Status.valueOf(status.toUpperCase()); // convert String → enum
+        Status statusCategory = Status.valueOf(status.toUpperCase());
 
         return em.createQuery(
                         queryScripts.findByStatus(), FlaggedTransaction.class)
-                .setParameter("statusCategory", statusCategory)
+                .setParameter("transactionStatus", statusCategory)
                 .getResultList()
                 .stream().toList();
     }
 
     @Override
     public List<FlaggedTransaction> findFlaggedTransactionPaymentCategory(String category) {
-        PaymentCategory paymentCategory = PaymentCategory.valueOf(category.toUpperCase()); // convert String → enum
+        PaymentCategory paymentCategory = PaymentCategory.valueOf(category.toUpperCase());
 
         return em.createQuery(
                         queryScripts.findByPaymentCategory(), FlaggedTransaction.class)

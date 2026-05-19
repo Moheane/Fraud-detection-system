@@ -1,12 +1,14 @@
 package com.frauddetectionapp.services.authentication;
 
 import com.frauddetectionapp.Entities.user.User;
-import com.frauddetectionapp.dto.auth.AuthResponse;
+import com.frauddetectionapp.dto.user.AuthResponse;
 import com.frauddetectionapp.dto.user.AuthRequest;
 
 import com.frauddetectionapp.repositories.user.UserRepository;
+import com.frauddetectionapp.services.exceptions.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +27,20 @@ public class AuthService {
     private final JwtService jwtService;
 
     public AuthResponse register(AuthRequest request, User.Role role) {
+
+        if (request.getPassword().length() < 8) {
+            throw new BusinessException("Password must be at least 8 characters long");
+        }
+        if (request.getUsername().isEmpty()) {
+            throw new BusinessException("username cannot be empty");
+        }
+
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new BusinessException("Username already taken", HttpStatus.CONFLICT);
+        }
+
+
+
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -39,6 +55,25 @@ public class AuthService {
     }
 
     public AuthResponse login(AuthRequest request) {
+
+        if (request.getPassword().length() < 8) {
+            throw new BusinessException("Password must be at least 8 characters long");
+        }
+        if (request.getUsername().isEmpty()) {
+            throw new BusinessException("username cannot be empty");
+        }
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new BusinessException(
+                        "Invalid username or password",
+                        HttpStatus.UNAUTHORIZED));
+
+        boolean passwordMatches = passwordEncoder.matches(request.getPassword(), user.getPassword());
+
+        if (!passwordMatches) {
+            throw new BusinessException("Invalid username or password", HttpStatus.UNAUTHORIZED);
+        }
+
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -48,8 +83,6 @@ public class AuthService {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         String token = jwtService.generateToken(userDetails);
-
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         log.info("User logged in: {}", request.getUsername());
         return new AuthResponse(token, user.getRole().name(), user.getUsername());
     }

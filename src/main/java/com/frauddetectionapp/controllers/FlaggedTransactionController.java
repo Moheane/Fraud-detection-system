@@ -64,12 +64,17 @@ class FlaggedTransactionController {
         return ResponseEntity.status(HttpStatus.OK).body(flaggedTransactionService.getByChannel(channel));
     }
 
-    @Operation(summary = "Get Flagged Payment Category", description = "Get Flagged Transaction By Payment category")
+    @Operation(summary = "Get Flagged Transaction By Payment Category", description = "Get Flagged Transaction By Payment category")
     @GetMapping("/payment/{paymentCategory}")
     public ResponseEntity<List<FlaggedTransaction>> getByPaymentCategory(@PathVariable String paymentCategory) {
         return ResponseEntity.status(HttpStatus.OK).body(flaggedTransactionService.getByPaymentCategory(paymentCategory));
     }
 
+    @Operation(summary = "Get Flagged Transaction By FraudRule", description = "Get Flagged Transaction By FraudRule")
+    @GetMapping("/fraudRule/{fraudRule}")
+    public ResponseEntity<List<FlaggedTransaction>> getByFraudRule(@PathVariable String fraudRule) {
+        return ResponseEntity.status(HttpStatus.OK).body(flaggedTransactionService.getByFraudRule(fraudRule));
+    }
 
 
 

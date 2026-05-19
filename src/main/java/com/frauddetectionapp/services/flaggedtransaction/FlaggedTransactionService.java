@@ -54,6 +54,12 @@ public class FlaggedTransactionService {
         return flaggedTransactionRepository.findFlaggedTransactionPaymentCategory(paymentCategory);
     }
 
+    public List<FlaggedTransaction> getByFraudRule(String fraudRule) {
+        log.info("Getting transaction by fraud rule {}", fraudRule);
+
+        return flaggedTransactionRepository.findFlaggedTransactionFraudRule(fraudRule);
+    }
+
 
 
     public void deleteTransaction(Long userId) {

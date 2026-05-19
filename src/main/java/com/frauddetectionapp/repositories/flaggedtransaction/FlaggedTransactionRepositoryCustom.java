@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface FlaggedTransactionRepositoryCustom {
     List<FlaggedTransaction> findFlaggedTransactionLocation(String flagStatus);
+    List<FlaggedTransaction> findFlaggedTransactionFraudRule(String flagStatus);
     List<FlaggedTransaction> findFlaggedTransactionChannel(String channel);
     List<FlaggedTransaction> findFlaggedTransactionStatus(String channel);
     List<FlaggedTransaction> findFlaggedTransactionPaymentCategory(String channel);

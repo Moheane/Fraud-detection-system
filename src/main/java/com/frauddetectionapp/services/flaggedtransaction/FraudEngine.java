@@ -3,6 +3,7 @@ package com.frauddetectionapp.services.flaggedtransaction;
 import com.frauddetectionapp.Entities.flaggedtransaction.FlaggedTransaction;
 import com.frauddetectionapp.Entities.flaggedtransaction.FraudRule;
 import com.frauddetectionapp.Entities.flaggedtransaction.FraudRuleHitResults;
+import com.frauddetectionapp.Entities.flaggedtransaction.Risk;
 import com.frauddetectionapp.Entities.transaction.PaymentCategory;
 import com.frauddetectionapp.Entities.transaction.Transaction;
 import com.frauddetectionapp.services.flaggedtransaction.fraudrules.*;
@@ -54,15 +55,26 @@ public class FraudEngine {
 
     private FlaggedTransaction buildCombinedFlag(Transaction t, List<FraudRuleHitResults> flags) {
 
-        // "HIGH_AMOUNT, RAPID_TRANSACTIONS"
          String triggeredRules = flags.stream()
-                .map(FraudRuleHitResults::getRuleName)
+                 .map(r -> r.getRuleName().name())
                 .collect(Collectors.joining(", "));
 
-        // "Amount 15000 exceeds threshold | 5 transactions in 60 seconds"
         String combinedReason = flags.stream()
                 .map(FraudRuleHitResults::getReason)
                 .collect(Collectors.joining(" | "));
+
+        int totalPoints = flags.stream()
+                .mapToInt(r -> r.getRuleName().getPoints())
+                .sum();
+
+        Risk risk;
+        if (totalPoints > 66) {
+            risk = Risk.HIGH;
+        } else if (totalPoints >= 33) {
+            risk = Risk.MEDIUM;
+        } else {
+            risk = Risk.LOW;
+        }
 
         return FlaggedTransaction.builder()
                 .amount(t.getAmount())
@@ -78,6 +90,8 @@ public class FraudEngine {
                 .triggeredRules(triggeredRules)
                 .reason(combinedReason)
                 .transactionStatus(t.getStatus())
+                .risk(risk)
+                .RiskScore(totalPoints)
                 .build();
 
     }

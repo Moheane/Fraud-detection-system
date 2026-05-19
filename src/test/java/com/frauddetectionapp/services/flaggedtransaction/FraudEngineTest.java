@@ -1,6 +1,7 @@
 package com.frauddetectionapp.services.flaggedtransaction;
 
 import com.frauddetectionapp.Entities.flaggedtransaction.FlaggedTransaction;
+import com.frauddetectionapp.Entities.flaggedtransaction.FraudRule;
 import com.frauddetectionapp.Entities.flaggedtransaction.FraudRuleHitResults;
 import com.frauddetectionapp.Entities.transaction.Location;
 import com.frauddetectionapp.Entities.transaction.Transaction;
@@ -43,8 +44,8 @@ class FraudEngineTest {
     @Test
     @DisplayName("Should flag transaction when rules are triggered")
     void shouldFlagTransactionWhenRulesTriggered() {
-        when(highAmountRule.evaluate(any())).thenReturn(Optional.of(new FraudRuleHitResults("HIGH_AMOUNT", "High amount")));
-        when(suspiciousLocationRule.evaluate(any())).thenReturn(Optional.of(new FraudRuleHitResults("SUSPICIOUS_LOCATION", "Bad location")));
+        when(highAmountRule.evaluate(any())).thenReturn(Optional.of(new FraudRuleHitResults(FraudRule.HIGH_AMOUNT, "High amount")));
+        when(suspiciousLocationRule.evaluate(any())).thenReturn(Optional.of(new FraudRuleHitResults(FraudRule.SUSPICIOUS_LOCATION, "Bad location")));
 
         Optional<FlaggedTransaction> result = fraudEngine.evaluate(transaction);
 

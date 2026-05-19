@@ -42,10 +42,9 @@ public class MultipleFailedAttemptsRule implements FraudRuleInterface {
 
         if (failedCount >= FAILED_ATTEMPTS_THRESHOLD) {
             return Optional.of(new FraudRuleHitResults(
-                    "MULTIPLE_FAILED_ATTEMPTS_RULE",
+                    FraudRule.MULTIPLE_FAILED_ATTEMPTS,
                     "User had " + failedCount + " failed transaction(s) in the last " +
-                            WINDOW_MINUTES + " minutes before this successful transaction — " +
-                            "possible brute force or card testing"
+                            WINDOW_MINUTES + " minutes"
             ));
         }
 

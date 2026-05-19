@@ -37,11 +37,5 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @PrePersist
-    private void generateDeviceId() {
-        if (deviceId == null || deviceId.isBlank()) {
-            int number = (int)(Math.random() * 90000) + 10000;
-            deviceId = String.valueOf(number);
-        }
+
     }
-}

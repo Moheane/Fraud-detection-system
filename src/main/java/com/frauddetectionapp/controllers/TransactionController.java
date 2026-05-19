@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Tag(name = "Transactions", description = "Transactions APIs")
 @RestController
@@ -41,6 +42,12 @@ public class TransactionController {
     }
 
     @Operation(summary = "Get Transaction by Id", description = "Get Transaction By Id")
+    @GetMapping("/transactions/get_by_Id/{id}")
+    public Optional<TransactionResponse> getTransactionsById(@PathVariable Long id) {
+        return transactionService.getTransactionById(id);
+    }
+
+    @Operation(summary = "Get Transaction by user Id", description = "Get Transaction By user Id")
     @GetMapping("/transactions/get_by_user/{user_id}")
     public List<TransactionResponse> getTransactionsByUserId(@PathVariable String user_id) {
         return transactionService.getTransactionsByUser(user_id);

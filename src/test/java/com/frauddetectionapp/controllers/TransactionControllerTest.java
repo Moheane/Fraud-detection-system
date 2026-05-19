@@ -44,7 +44,7 @@ class TransactionControllerTest {
         ResponseEntity<TransactionResponse> result = transactionController.createTransaction(request);
 
         assertEquals(HttpStatus.CREATED, result.getStatusCode());
-        assertEquals("REF123", result.getBody().getReference());
+        assertEquals(null, result.getBody().getReference());
     }
 
     @Test

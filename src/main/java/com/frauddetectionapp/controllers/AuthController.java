@@ -1,7 +1,7 @@
 package com.frauddetectionapp.controllers;
 
 import com.frauddetectionapp.Entities.user.User;
-import com.frauddetectionapp.dto.auth.AuthResponse;
+import com.frauddetectionapp.dto.user.AuthResponse;
 import com.frauddetectionapp.dto.user.AuthRequest;
 import com.frauddetectionapp.services.authentication.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;

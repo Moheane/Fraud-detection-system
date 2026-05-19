@@ -31,7 +31,7 @@ public class DuplicateReferenceRule implements FraudRuleInterface {
             log.warn("DUPLICATE_REFERENCE triggered — transactionId={} reference={}",
                     transaction.getTransactionId(), reference);
             return Optional.of(new FraudRuleHitResults(
-                    "DUPLICATE_REFERENCE",
+                    FraudRule.DUPLICATE_REFERENCE,
                     "Reference " + reference + " has already been used"
             ));
         }

@@ -31,7 +31,7 @@ public class RapidTransactionRule implements FraudRuleInterface {
         if (recentCount >= LIMIT) {
 
             return Optional.of(new FraudRuleHitResults(
-                    "RAPID_TRANSANCTION_RULE",
+                    FraudRule.RAPID_TRANSACTIONS,
                     "User made " + recentCount + " transactions within " + WINDOW_SECONDS + " seconds"
             ));
         }

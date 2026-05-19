@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FraudRuleHitResults {
-    String ruleName;
+    FraudRule ruleName;
     String reason;
 }

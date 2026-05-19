@@ -1,7 +1,7 @@
 package com.frauddetectionapp.services.authentication;
 
 import com.frauddetectionapp.Entities.user.User;
-import com.frauddetectionapp.dto.auth.AuthResponse;
+import com.frauddetectionapp.dto.user.AuthResponse;
 import com.frauddetectionapp.dto.user.AuthRequest;
 import com.frauddetectionapp.repositories.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,7 +36,7 @@ class AuthServiceTest {
     void setUp() {
         request = new AuthRequest();
         request.setUsername("testuser");
-        request.setPassword("pass123");
+        request.setPassword("pass123456");
     }
 
     @Test

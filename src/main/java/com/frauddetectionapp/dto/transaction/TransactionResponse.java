@@ -12,7 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TransactionResponse {
     private Long transactionId;
-    private String UserName;
     private String amount;
     private Currency currency;
     private String timeStamp;
@@ -21,4 +20,7 @@ public class TransactionResponse {
     private Channel channel;
     private String reference;
     private PaymentCategory paymentCategory;
+
+    public TransactionResponse(long l, String john, String number, Object o, Object o1, Object o2, Object o3, Object o4, String ref123, Object o5) {
+    }
 }

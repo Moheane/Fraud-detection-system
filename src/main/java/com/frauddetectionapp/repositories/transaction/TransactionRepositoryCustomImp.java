@@ -27,7 +27,7 @@ class TransactionRepositoryImpl implements TransactionRepositoryCustom {
 
     @Override
     public List<Transaction> findByChannel(String channel) {
-        Channel channelCategory = Channel.valueOf(channel.toUpperCase()); // convert String → enum
+        Channel channelCategory = Channel.valueOf(channel.toUpperCase());
 
         return em.createQuery(
                         transactionQueryScripts.findByChannel(), Transaction.class)
@@ -47,7 +47,7 @@ class TransactionRepositoryImpl implements TransactionRepositoryCustom {
 
     @Override
     public List<Transaction> findTransactionsByUserPaymentCategory(String paymentCategory) {
-        PaymentCategory category = PaymentCategory.valueOf(paymentCategory.toUpperCase()); // convert String → enum
+        PaymentCategory category = PaymentCategory.valueOf(paymentCategory.toUpperCase());
 
         return em.createQuery(
                         transactionQueryScripts.findByPaymentCategory(), Transaction.class)

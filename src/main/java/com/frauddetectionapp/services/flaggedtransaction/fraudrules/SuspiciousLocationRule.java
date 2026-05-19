@@ -22,7 +22,7 @@ public class SuspiciousLocationRule implements FraudRuleInterface {
 
         if (location != null && SUSPICIOUS_LOCATIONS.contains(location)) {
             return Optional.of(new FraudRuleHitResults(
-                    "SUSPICIOUS_LOCATIONS",
+                    FraudRule.SUSPICIOUS_LOCATION,
                     "Transaction originated from flagged location: " + location
             ));
         }

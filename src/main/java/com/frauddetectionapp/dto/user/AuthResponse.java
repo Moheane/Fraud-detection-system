@@ -1,4 +1,4 @@
-package com.frauddetectionapp.dto.auth;
+package com.frauddetectionapp.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -18,7 +18,6 @@ public class TransactionsMapper {
         results.setChannel(transaction.getChannel());
         results.setMethod(transaction.getMethod());
         results.setLocation(transaction.getLocation());
-        results.setUserName(transaction.getUserName());
         results.setReference(transaction.getReference());
         results.setTimeStamp(transaction.getTimeStamp());
         results.setPaymentCategory(transaction.getPaymentCategory());
